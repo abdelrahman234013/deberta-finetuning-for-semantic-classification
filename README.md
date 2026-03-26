@@ -4,81 +4,78 @@ DeBERTa-based semantic classification project exploring both full fine-tuning an
 
 # DeBERTa Fine-Tuning for Semantic Classification
 
-This repository explores how a pretrained **DeBERTa base model** can be adapted to a **three-class semantic classification task** using two different training strategies:
+This repository explores how a pretrained **DeBERTa-base** model can be adapted to a **three-class classification task** using the **EduRABSA_ASQE** dataset. The project compares three settings:
 
-- **Full Fine-Tuning**
-- **LoRA (Low-Rank Adaptation)**
+1. **Baseline**
+2. **Full Fine-Tuning**
+3. **LoRA Fine-Tuning**
 
-The project compares three settings:
-
-1. **Baseline model** before task-specific adaptation
-2. **Full fine-tuning** of the model on the target dataset
-3. **LoRA-based fine-tuning** as a parameter-efficient alternative
-
-The goal is to evaluate how much performance improves after adapting the model to the task, and to compare the trade-off between full fine-tuning and parameter-efficient fine-tuning.
+The main purpose of this work is to measure how much task-specific adaptation improves performance, and to compare standard full fine-tuning with a more parameter-efficient alternative, **LoRA (Low-Rank Adaptation)**.
 
 ---
 
 ## Project Goal
 
-The main goal of this project is to adapt a pretrained **DeBERTa** model to a semantic classification task and compare different adaptation strategies.
-
-More specifically, this project aims to:
-
-- evaluate the model in a **baseline setting**
-- apply **full fine-tuning** on the downstream task
-- apply **LoRA fine-tuning** as a lighter and more efficient alternative
-- compare the three approaches using:
-  - accuracy
-  - precision
-  - recall
-  - macro F1-score
-  - confusion matrices
-
----
-
-## Methodology
-
-### 1. Baseline Model
-The baseline model represents the performance of the model **before meaningful task-specific adaptation**.  
-This gives a reference point for understanding how much improvement comes from fine-tuning.
-
-### 2. Full Fine-Tuning
-In full fine-tuning, the pretrained DeBERTa model is fully adapted to the downstream classification task by updating the model parameters during training.  
-This method usually gives strong performance, but it is computationally more expensive.
-
-### 3. LoRA Fine-Tuning
-LoRA (**Low-Rank Adaptation**) is a **parameter-efficient fine-tuning** method that injects small trainable low-rank matrices into the model while keeping most of the original pretrained weights frozen.  
-This reduces the number of trainable parameters while still allowing the model to adapt effectively to the target task.
-
----
-
-## Model Description
-
-The project uses a **DeBERTa base transformer model** for classification.
-
-DeBERTa is a transformer-based language model designed to improve contextual representation learning. It is well suited for NLP classification tasks because it can capture strong semantic relationships in text and transfer pretrained language understanding to downstream problems.
-
-For this project, the model is used for **multi-class classification** with three output labels:
+The goal of this project is to fine-tune a pretrained DeBERTa-base model for **aspect-level sentiment / semantic classification**.  
+Although the original dataset is designed for **Aspect-Sentiment Quadruplet Extraction (ASQE)**, in this project it is reformulated into a **3-class classification problem** where the model predicts one of:
 
 - **negative**
 - **neutral**
 - **positive**
 
+We compare:
+
+- the behavior of the model before meaningful task adaptation (**baseline**)
+- the performance after **full fine-tuning**
+- the performance after **LoRA fine-tuning**
+
 ---
 
-## Dataset Description
+## Model Used
 
-The dataset used in this project is a **three-class text classification dataset** with labels:
+This project uses **DeBERTa-base**, a transformer-based language model that is widely used for NLP classification tasks because of its strong contextual understanding and transfer learning ability.
 
-- **negative**
-- **neutral**
-- **positive**
+For the downstream task, the model is used as a **multi-class classifier** with three output labels:
 
-The task is formulated as a semantic/sentiment classification problem where the model predicts the correct class for each input sample.
+- Negative
+- Neutral
+- Positive
 
-In the project pipeline, each sample is transformed into a format suitable for DeBERTa-based classification.  
-For example, if the task is aspect-aware, the input can be structured in a form similar to:
+  ![LoRA Classification Report](https://github.com/abdelrahman234013/deberta-finetuning-for-semantic-classification/blob/main/screenshots/base_model/Screenshot%202026-03-26%20215038.png?raw=true)
+
+Two adaptation strategies were applied:
+
+### 1. Full Fine-Tuning
+In full fine-tuning, the model weights are updated across the network during training so the model can fully adapt to the downstream task.
+
+### 2. LoRA Fine-Tuning
+LoRA (**Low-Rank Adaptation**) is a **parameter-efficient fine-tuning** method where only a small number of additional trainable parameters are introduced, while most pretrained weights remain frozen. This makes adaptation lighter and more efficient while still giving strong performance.
+
+---
+
+## Dataset
+
+This project uses **EduRABSA_ASQE**, a version of the EduRABSA dataset published on Hugging Face. EduRABSA is described by its authors as the **first public annotated ABSA dataset for English education reviews**, covering three review subject types: **course reviews, teaching staff reviews, and university reviews**. :contentReference[oaicite:0]{index=0}
+
+On Hugging Face, the `EduRABSA_ASQE` release contains **6.5k total rows** in one default subset, split into about **4k training rows** and **2.5k test rows**. Each dataset row contains the fields `id`, `task_type`, `original_id`, `text`, and `output`. :contentReference[oaicite:1]{index=1}
+
+The important field is `output`, which stores a **list of ASQE annotations**. Each annotation contains:
+
+- **aspect**
+- **category**
+- **opinion**
+- **sentiment** :contentReference[oaicite:2]{index=2}
+
+This means that a single review can contain **multiple labeled opinion targets**, each with its own sentiment. Some reviews can also have an empty output list, meaning no extractable quadruplet was annotated for that row. :contentReference[oaicite:3]{index=3}
+
+### How the Dataset Was Used in This Project
+
+The original dataset is meant for **Aspect-Sentiment Quadruplet Extraction**, not plain classification.  
+To make it suitable for DeBERTa-based classification, each annotated quadruplet was converted into a separate classification instance.
+
+So instead of predicting the full quadruplet, the model predicts only the **sentiment label** for a given aspect-aware input.
+
+A typical input format used in this project is:
 
 ```text
 Aspect: <aspect> [SEP] Opinion: <opinion> [SEP] Review: <review text>
