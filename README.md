@@ -43,6 +43,8 @@ For the downstream task, the model is used as a **multi-class classifier** with 
 
   ![LoRA Classification Report](https://github.com/abdelrahman234013/deberta-finetuning-for-semantic-classification/blob/main/screenshots/base_model/Screenshot%202026-03-26%20215038.png?raw=true)
 
+  ![LoRA Classification Report]([https://github.com/abdelrahman234013/deberta-finetuning-for-semantic-classification/blob/main/screenshots/base_model/Screenshot%202026-03-26%20215038.png?raw=true](https://github.com/abdelrahman234013/deberta-finetuning-for-semantic-classification/blob/main/screenshots/base_model/Screenshot%202026-03-26%20215046.png?raw=true))
+
 Two adaptation strategies were applied:
 
 ### 1. Full Fine-Tuning
