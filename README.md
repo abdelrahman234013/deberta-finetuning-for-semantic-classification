@@ -81,4 +81,4 @@ In the project pipeline, each sample is transformed into a format suitable for D
 For example, if the task is aspect-aware, the input can be structured in a form similar to:
 
 ```text
-Aspect: <aspect> [SEP] Review: <review text>
+Aspect: <aspect> [SEP] Opinion: <opinion> [SEP] Review: <review text>
