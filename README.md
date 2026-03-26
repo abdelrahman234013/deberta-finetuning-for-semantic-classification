@@ -43,16 +43,32 @@ For the downstream task, the model is used as a **multi-class classifier** with 
 
   ![LoRA Classification Report](https://github.com/abdelrahman234013/deberta-finetuning-for-semantic-classification/blob/main/screenshots/base_model/Screenshot%202026-03-26%20215038.png?raw=true)
 
-  ![LoRA Classification Report]([https://github.com/abdelrahman234013/deberta-finetuning-for-semantic-classification/blob/main/screenshots/base_model/Screenshot%202026-03-26%20215038.png?raw=true](https://github.com/abdelrahman234013/deberta-finetuning-for-semantic-classification/blob/main/screenshots/base_model/Screenshot%202026-03-26%20215046.png?raw=true))
+  ![LoRA Classification Report](https://github.com/abdelrahman234013/deberta-finetuning-for-semantic-classification/blob/main/screenshots/base_model/Screenshot%202026-03-26%20215046.png?raw=true)
 
 Two adaptation strategies were applied:
 
 ### 1. Full Fine-Tuning
 In full fine-tuning, the model weights are updated across the network during training so the model can fully adapt to the downstream task.
 
+  ![LoRA Classification Report](https://github.com/abdelrahman234013/deberta-finetuning-for-semantic-classification/blob/main/screenshots/full_tuning/Screenshot%202026-03-26%20215134.png?raw=true)
+
+  ![LoRA Classification Report](https://github.com/abdelrahman234013/deberta-finetuning-for-semantic-classification/blob/main/screenshots/full_tuning/Screenshot%202026-03-26%20215201.png?raw=true)
+
+  ![LoRA Classification Report](https://github.com/abdelrahman234013/deberta-finetuning-for-semantic-classification/blob/main/screenshots/full_tuning/Screenshot%202026-03-26%20215212.png?raw=true)
+
+  ![LoRA Classification Report](https://github.com/abdelrahman234013/deberta-finetuning-for-semantic-classification/blob/main/screenshots/full_tuning/Screenshot%202026-03-26%20215223.png?raw=true)
+
 ### 2. LoRA Fine-Tuning
 LoRA (**Low-Rank Adaptation**) is a **parameter-efficient fine-tuning** method where only a small number of additional trainable parameters are introduced, while most pretrained weights remain frozen. This makes adaptation lighter and more efficient while still giving strong performance.
 
+  ![LoRA Classification Report](https://github.com/abdelrahman234013/deberta-finetuning-for-semantic-classification/blob/main/screenshots/Lora/Screenshot%202026-03-26%20215335.png?raw=true)
+
+  ![LoRA Classification Report](https://github.com/abdelrahman234013/deberta-finetuning-for-semantic-classification/blob/main/screenshots/Lora/Screenshot%202026-03-26%20215343.png?raw=true)
+
+  ![LoRA Classification Report](https://github.com/abdelrahman234013/deberta-finetuning-for-semantic-classification/blob/main/screenshots/Lora/Screenshot%202026-03-26%20215354.png?raw=true)
+
+  ![LoRA Classification Report](https://github.com/abdelrahman234013/deberta-finetuning-for-semantic-classification/blob/main/screenshots/Lora/Screenshot%202026-03-26%20215401.png?raw=true)
+  
 ---
 
 ## Dataset
